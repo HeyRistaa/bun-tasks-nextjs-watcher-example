@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Quick simple example (bun-tasks watcher)
+
+## Watcher Script (`scripts/watcher.ts`)
+
+The watcher script is a file monitoring utility that automatically populates empty React component files with a template.
+
+### How It Works
+
+1. **Monitors Directory**: Watches the `./src/components` directory for file changes
+2. **Detects New Files**: When a new file is created (detected via the `rename` event)
+3. **Auto-Populates**: If the new file is:
+   - A `.tsx` file
+   - Empty (0 bytes)
+   
+   Then it automatically writes a generic React component template to it:
+   ```tsx
+   import React from 'react';
+   
+   const MyComponent = () => {
+     return <div>Hello, World!</div>;
+   };
+   
+   export default MyComponent;
+   ```
+
+### Usage
+
+Run the watcher in a separate terminal:
+```bash
+bun run watch
+```
+
+Or run it alongside the dev server:
+```bash
+bun run start:all
+```
+
+The watcher will continue running until you stop it with `Ctrl+C`.
+
+### Benefits
+
+- **Faster Development**: No need to manually write boilerplate code for new components
+- **Consistency**: Ensures all new components follow the same structure
+- **Time Saver**: Automatically sets up the basic React component template
 
 ## Getting Started
 
-First, run the development server:
+1. Install dependencies:
+   ```bash
+   bun install
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+2. Run the development server:
+   ```bash
+   bun run dev
+   ```
+
+3. (Optional) Run the watcher in a separate terminal:
+   ```bash
+   bun run watch
+   ```
+
+   Or run both together:
+   ```bash
+   bun run start:all
+   ```
+
+## Project Structure
+
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+my-app/
+├── scripts/
+│   └── watcher.ts      # File watcher for auto-populating components
+├── src/
+│   ├── app/            # Next.js app directory
+│   └── components/     # React components (watched by watcher.ts)
+└── package.json        # Project configuration
+```
